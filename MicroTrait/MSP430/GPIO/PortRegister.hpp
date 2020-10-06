@@ -11,6 +11,7 @@
 #include <MicroTrait/Misc/Details.hpp>
 #include <MicroTrait/Misc/EnumBits.hpp>
 #include <MicroTrait/Universal/Register.hpp>
+#include <MicroTrait/MSP430/Settings.hpp>
 #include <stdint.h>
 #include <type_traits>
 #include <cstddef>
@@ -75,15 +76,19 @@ namespace MSP430 {
               public:
                 template<typename BIT, typename = typename std::enable_if<enable_Enum_bits<BIT>::enable, BIT>::type, typename... BITS>
                 constexpr void setAsOutputPin(const BIT &bit, const BITS &... bits) noexcept {
+#ifdef MSP430_DRIVERLIB_COMPATIBILITY
                     m_p0sel.clear(bit, bits...);
                     m_p1sel.clear(bit, bits...);
+#endif
                     m_dir.set(bit, bits...);
                 }
 
                 template<typename BIT, typename = typename std::enable_if<enable_Enum_bits<BIT>::enable, BIT>::type, typename... BITS>
                 constexpr void setAsInputPin(const BIT &bit, const BITS &... bits) noexcept {
+#ifdef MSP430_DRIVERLIB_COMPATIBILITY
                     m_p0sel.clear(bit, bits...);
                     m_p1sel.clear(bit, bits...);
+#endif
                     m_dir.clear(bit, bits...);
                     m_pull.clear(bit, bits...);
                 }
@@ -155,8 +160,10 @@ namespace MSP430 {
 
                 template<typename BIT, typename = typename std::enable_if<enable_Enum_bits<BIT>::enable, BIT>::type, typename... BITS>
                 constexpr void setAsInputPinWithPullDown(const BIT &bit, const BITS &... bits) noexcept {
+#ifdef MSP430_DRIVERLIB_COMPATIBILITY
                     m_p0sel.clear(bit, bits...);
                     m_p1sel.clear(bit, bits...);
+#endif
                     m_dir.clear(bit, bits...);
                     m_pull.set(bit, bits...);
                     m_out.clear(bit, bits...);
@@ -164,8 +171,10 @@ namespace MSP430 {
 
                 template<typename BIT, typename = typename std::enable_if<enable_Enum_bits<BIT>::enable, BIT>::type, typename... BITS>
                 constexpr void setAsInputPinWithPullUp(const BIT &bit, const BITS &... bits) noexcept {
+#ifdef MSP430_DRIVERLIB_COMPATIBILITY
                     m_p0sel.clear(bit, bits...);
                     m_p1sel.clear(bit, bits...);
+#endif
                     m_dir.clear(bit, bits...);
                     m_pull.set(bit, bits...);
                     m_out.set(bit, bits...);
