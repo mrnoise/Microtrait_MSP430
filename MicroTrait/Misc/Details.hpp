@@ -11,21 +11,19 @@
 
 namespace MT {
 
-	namespace Details {
+namespace Details {
 
-	template<typename T>
-	constexpr T orSum(const T& arg) noexcept
-	{
-		return arg;
-	}
+    template<typename T>
+    constexpr T orSum(const T &arg) noexcept {
+        return arg;
+    }
 
-	template<typename T, typename... ARGS>
-	constexpr T orSum(const T& arg, const ARGS&... args) noexcept
-	{
-		return arg | orSum(args...);
-	}
+    template<typename T, typename... ARGS>
+    constexpr T orSum(const T &arg, const ARGS &... args) noexcept {
+        return arg | orSum(args...);
+    }
 
-	}// namespace Details
+}// namespace Details
 }// namespace MT
 
 #endif /* MICROTRAIT_MISC_DETAILS_CPP_ */

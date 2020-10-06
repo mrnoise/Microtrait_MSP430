@@ -36,7 +36,6 @@ int main(void) {
 
     __bis_SR_register(GIE);
 
-
     while (1) {
     }
 }
