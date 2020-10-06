@@ -1,0 +1,5 @@
+//Add
+git subtree add --prefix=MicroTrait/ https://github.com/mrnoise/MicroTrait.git master --squash
+
+//Update
+git subtree pull --prefix=MicroTrait/ https://github.com/mrnoise/MicroTrait.git master --squash
