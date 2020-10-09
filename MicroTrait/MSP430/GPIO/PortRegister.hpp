@@ -60,7 +60,7 @@ namespace MSP430 {
         namespace Internal {
 
             template<volatile auto *INREG, volatile auto *OUTREG, volatile auto *DIRREG, volatile auto *PRENREG, volatile auto *P0SEL, volatile auto *P1SEL, volatile auto *IESREG, volatile auto *IEREG, volatile auto *IFGREG>
-            class PortWithInt {
+            struct PortWithInt {
 
               private:
                 MT::Universal::Register<INREG>   m_in{};
@@ -76,7 +76,7 @@ namespace MSP430 {
               public:
                 template<typename BIT, typename = typename std::enable_if<enable_Enum_bits<BIT>::enable, BIT>::type, typename... BITS>
                 constexpr void setAsOutputPin(const BIT &bit, const BITS &... bits) noexcept {
-#ifdef MSP430_DRIVERLIB_COMPATIBILITY
+#ifdef MT_MSP430_USE_DRIVERLIB_COMPATIBILITY
                     m_p0sel.clear(bit, bits...);
                     m_p1sel.clear(bit, bits...);
 #endif
@@ -85,7 +85,7 @@ namespace MSP430 {
 
                 template<typename BIT, typename = typename std::enable_if<enable_Enum_bits<BIT>::enable, BIT>::type, typename... BITS>
                 constexpr void setAsInputPin(const BIT &bit, const BITS &... bits) noexcept {
-#ifdef MSP430_DRIVERLIB_COMPATIBILITY
+#ifdef MT_MSP430_USE_DRIVERLIB_COMPATIBILITY
                     m_p0sel.clear(bit, bits...);
                     m_p1sel.clear(bit, bits...);
 #endif
@@ -160,7 +160,7 @@ namespace MSP430 {
 
                 template<typename BIT, typename = typename std::enable_if<enable_Enum_bits<BIT>::enable, BIT>::type, typename... BITS>
                 constexpr void setAsInputPinWithPullDown(const BIT &bit, const BITS &... bits) noexcept {
-#ifdef MSP430_DRIVERLIB_COMPATIBILITY
+#ifdef MT_MSP430_USE_DRIVERLIB_COMPATIBILITY
                     m_p0sel.clear(bit, bits...);
                     m_p1sel.clear(bit, bits...);
 #endif
@@ -171,7 +171,7 @@ namespace MSP430 {
 
                 template<typename BIT, typename = typename std::enable_if<enable_Enum_bits<BIT>::enable, BIT>::type, typename... BITS>
                 constexpr void setAsInputPinWithPullUp(const BIT &bit, const BITS &... bits) noexcept {
-#ifdef MSP430_DRIVERLIB_COMPATIBILITY
+#ifdef MT_MSP430_USE_DRIVERLIB_COMPATIBILITY
                     m_p0sel.clear(bit, bits...);
                     m_p1sel.clear(bit, bits...);
 #endif
@@ -218,7 +218,7 @@ namespace MSP430 {
             };
 
             template<volatile auto *INREG, volatile auto *OUTREG, volatile auto *DIRREG, volatile auto *PRENREG, volatile auto *P0SEL, volatile auto *P1SEL>
-            class Port {
+            struct Port {
 
               private:
                 MT::Universal::Register<INREG>   m_in{};
@@ -231,15 +231,19 @@ namespace MSP430 {
               public:
                 template<typename BIT, typename = typename std::enable_if<enable_Enum_bits<BIT>::enable, BIT>::type, typename... BITS>
                 constexpr void setAsOutputPin(const BIT &bit, const BITS &... bits) noexcept {
+#ifdef MT_MSP430_USE_DRIVERLIB_COMPATIBILITY
                     m_p0sel.clear(bit, bits...);
                     m_p1sel.clear(bit, bits...);
+#endif
                     m_dir.set(bit, bits...);
                 }
 
                 template<typename BIT, typename = typename std::enable_if<enable_Enum_bits<BIT>::enable, BIT>::type, typename... BITS>
                 constexpr void setAsInputPin(const BIT &bit, const BITS &... bits) noexcept {
+#ifdef MT_MSP430_USE_DRIVERLIB_COMPATIBILITY
                     m_p0sel.clear(bit, bits...);
                     m_p1sel.clear(bit, bits...);
+#endif
                     m_dir.clear(bit, bits...);
                     m_pull.clear(bit, bits...);
                 }
@@ -311,8 +315,10 @@ namespace MSP430 {
 
                 template<typename BIT, typename = typename std::enable_if<enable_Enum_bits<BIT>::enable, BIT>::type, typename... BITS>
                 constexpr void setAsInputPinWithPullDown(const BIT &bit, const BITS &... bits) noexcept {
+#ifdef MT_MSP430_USE_DRIVERLIB_COMPATIBILITY
                     m_p0sel.clear(bit, bits...);
                     m_p1sel.clear(bit, bits...);
+#endif
                     m_dir.clear(bit, bits...);
                     m_pull.set(bit, bits...);
                     m_out.clear(bit, bits...);
@@ -320,8 +326,10 @@ namespace MSP430 {
 
                 template<typename BIT, typename = typename std::enable_if<enable_Enum_bits<BIT>::enable, BIT>::type, typename... BITS>
                 constexpr void setAsInputPinWithPullUp(const BIT &bit, const BITS &... bits) noexcept {
+#ifdef MT_MSP430_USE_DRIVERLIB_COMPATIBILITY
                     m_p0sel.clear(bit, bits...);
                     m_p1sel.clear(bit, bits...);
+#endif
                     m_dir.clear(bit, bits...);
                     m_pull.set(bit, bits...);
                     m_out.set(bit, bits...);
