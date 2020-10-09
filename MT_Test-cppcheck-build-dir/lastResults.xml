@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<results version="2">
+    <cppcheck version="2.2"/>
+    <errors>
+        <error id="unusedPrivateFunction" severity="style" msg="Unused private function: &amp;#039;Port1::Port_2&amp;#039;" verbose="Unused private function: &amp;#039;Port1::Port_2&amp;#039;" cwe="398" hash="977739894712116589" sinceDate="09.10.2020">
+            <location file0="Main.cpp" file="MicroTrait\MSP430\GPIO\PortInterrupt.hpp" line="33"/>
+        </error>
+        <error id="noExplicitConstructor" severity="style" msg="Struct &amp;#039;Port1&amp;#039; has a constructor with 1 argument that is not explicit." verbose="Struct &amp;#039;Port1&amp;#039; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided." cwe="398" hash="4188472643696734982" sinceDate="09.10.2020">
+            <location file0="Main.cpp" file="MicroTrait\MSP430\GPIO\PortInterrupt.hpp" line="24"/>
+        </error>
+        <error id="shadowVariable" severity="style" msg="Local variable &amp;#039;f&amp;#039; shadows outer variable" verbose="Local variable &amp;#039;f&amp;#039; shadows outer variable" cwe="398" hash="3338264224173004666" sinceDate="09.10.2020">
+            <location file0="Main.cpp" file="MicroTrait\MSP430\GPIO\PortInterrupt.hpp" line="39" info="Shadow variable"/>
+            <location file0="Main.cpp" file="MicroTrait\MSP430\GPIO\PortInterrupt.hpp" line="27" info="Shadowed declaration"/>
+        </error>
+        <error id="unusedPrivateFunction" severity="style" msg="Unused private function: &amp;#039;Port1::Port_1&amp;#039;" verbose="Unused private function: &amp;#039;Port1::Port_1&amp;#039;" cwe="398" hash="14857680588612389741" sinceDate="09.10.2020">
+            <location file0="Main.cpp" file="MicroTrait\MSP430\GPIO\PortInterrupt.hpp" line="31"/>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &amp;#039;Port_2&amp;#039; is never used." verbose="The function &amp;#039;Port_2&amp;#039; is never used." cwe="561" sinceDate="09.10.2020">
+            <location file="Main.cpp" line="65"/>
+        </error>
+    </errors>
+</results>
