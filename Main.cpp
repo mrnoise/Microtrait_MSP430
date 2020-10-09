@@ -1,17 +1,29 @@
 
-#include <msp430.h>
-
 //#define RUN_TESTS
 
 #include <stdint.h>
-#include "MicroTrait/MSP430/GPIO/PortRegister.hpp"
-#include "MicroTrait/Misc/EnumBits.hpp"
+#include "MicroTrait/MSP430/Settings.hpp"
 #include "MicroTrait/Universal/Register.hpp"
+#include "MicroTrait/MSP430/GPIO/PortRegister.hpp"
+#include "MicroTrait/MSP430/GPIO/PortInterrupt.hpp"
+
 #ifdef RUN_TESTS
 #include "MicroTrait/Tests/TestRunner.hpp"
 #endif
 
 using namespace MT::MSP430;
+
+#ifdef USE_GPIO_COMPILE_TIME_CALLBACKS
+constexpr auto isr = GPIO::Interrupt::makeInterrupt(
+    GPIO::Interrupt::makeHandler(
+        GPIO::Interrupt::PORTS::PORT2,
+        []() {
+            GPIO::Port1 p1{};
+            GPIO::Port2 p2{};
+            p2.clearInterrupt(PIN::P3);
+            p1.toggleOutputOnPin(PIN::P0);
+        }));
+#endif
 
 int main(void) {
     MT::Universal::Register<&WDTCTL>  wdt{};
@@ -21,6 +33,15 @@ int main(void) {
 
 #ifdef RUN_TESTS
     MT::Tests::run();
+#endif
+
+#ifndef USE_GPIO_COMPILE_TIME_CALLBACKS
+    GPIO::Interrupt::registerCallback(GPIO::Interrupt::PORTS::PORT2, []() {
+        GPIO::Port1 p1{};
+        GPIO::Port2 p2{};
+        p2.clearInterrupt(PIN::P3);
+        p1.toggleOutputOnPin(PIN::P0);
+    });
 #endif
 
     GPIO::Port1 p1{};
@@ -40,6 +61,7 @@ int main(void) {
     }
 }
 
+#ifdef USE_GPIO_COMPILE_TIME_CALLBACKS
 // Port 1 interrupt service routine
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
 #pragma vector = PORT2_VECTOR
@@ -50,8 +72,6 @@ void __attribute__((interrupt(PORT2_VECTOR))) Port_2(void)
 #error Compiler not supported!
 #endif
 {
-    GPIO::Port1 p1{};
-    GPIO::Port2 p2{};
-    p2.clearInterrupt(PIN::P3);
-    p1.toggleOutputOnPin(PIN::P0);
+    std::get<isr.get_index(GPIO::Interrupt::PORTS::PORT2)>(isr.m_vectors)();
 }
+#endif
