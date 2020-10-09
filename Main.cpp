@@ -13,7 +13,7 @@
 
 using namespace MT::MSP430;
 
-#ifdef USE_GPIO_COMPILE_TIME_CALLBACKS
+#ifdef MT_MSP430_USE_GPIO_COMPILE_TIME_CALLBACKS
 constexpr auto isr = GPIO::Interrupt::makeInterrupt(
     GPIO::Interrupt::makeHandler(
         GPIO::Interrupt::PORTS::PORT2,
@@ -35,7 +35,7 @@ int main(void) {
     MT::Tests::run();
 #endif
 
-#ifndef USE_GPIO_COMPILE_TIME_CALLBACKS
+#ifndef MT_MSP430_USE_GPIO_COMPILE_TIME_CALLBACKS
     GPIO::Interrupt::registerCallback(GPIO::Interrupt::PORTS::PORT2, []() {
         GPIO::Port1 p1{};
         GPIO::Port2 p2{};
@@ -61,8 +61,7 @@ int main(void) {
     }
 }
 
-#ifdef USE_GPIO_COMPILE_TIME_CALLBACKS
-// Port 1 interrupt service routine
+#ifdef MT_MSP430_USE_GPIO_COMPILE_TIME_CALLBACKS
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
 #pragma vector = PORT2_VECTOR
 __interrupt void Port_2(void)

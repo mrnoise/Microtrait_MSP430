@@ -1,27 +1,10 @@
 <?xml version="1.0"?>
-<analyzerinfo checksum="3050023944">
-        <error id="unusedPrivateFunction" severity="style" msg="Unused private function: &apos;Port1::Port_2&apos;" verbose="Unused private function: &apos;Port1::Port_2&apos;" cwe="398" hash="977739894712116589">
-            <location file0="C:\Users\steff\iCloudDrive\Trunk\CCS\Microtrait_Test\Main.cpp" file="C:\Users\steff\iCloudDrive\Trunk\CCS\Microtrait_Test\MicroTrait\MSP430\GPIO\PortInterrupt.hpp" line="33" column="70"/>
-            <symbol>Port1::Port_2</symbol>
-        </error>
-        <error id="noExplicitConstructor" severity="style" msg="Struct &apos;Port1&apos; has a constructor with 1 argument that is not explicit." verbose="Struct &apos;Port1&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided." cwe="398" hash="4188472643696734982">
-            <location file0="C:\Users\steff\iCloudDrive\Trunk\CCS\Microtrait_Test\Main.cpp" file="C:\Users\steff\iCloudDrive\Trunk\CCS\Microtrait_Test\MicroTrait\MSP430\GPIO\PortInterrupt.hpp" line="24" column="17"/>
-            <symbol>Port1</symbol>
-        </error>
-        <error id="shadowVariable" severity="style" msg="Local variable &apos;f&apos; shadows outer variable" verbose="Local variable &apos;f&apos; shadows outer variable" cwe="398" hash="3338264224173004666">
-            <location file0="C:\Users\steff\iCloudDrive\Trunk\CCS\Microtrait_Test\Main.cpp" file="C:\Users\steff\iCloudDrive\Trunk\CCS\Microtrait_Test\MicroTrait\MSP430\GPIO\PortInterrupt.hpp" line="39" column="26" info="Shadow variable"/>
-            <location file0="C:\Users\steff\iCloudDrive\Trunk\CCS\Microtrait_Test\Main.cpp" file="C:\Users\steff\iCloudDrive\Trunk\CCS\Microtrait_Test\MicroTrait\MSP430\GPIO\PortInterrupt.hpp" line="27" column="22" info="Shadowed declaration"/>
-            <symbol>f</symbol>
-        </error>
-        <error id="unusedPrivateFunction" severity="style" msg="Unused private function: &apos;Port1::Port_1&apos;" verbose="Unused private function: &apos;Port1::Port_1&apos;" cwe="398" hash="14857680588612389741">
-            <location file0="C:\Users\steff\iCloudDrive\Trunk\CCS\Microtrait_Test\Main.cpp" file="C:\Users\steff\iCloudDrive\Trunk\CCS\Microtrait_Test\MicroTrait\MSP430\GPIO\PortInterrupt.hpp" line="31" column="34"/>
-            <symbol>Port1::Port_1</symbol>
-        </error>
+<analyzerinfo checksum="701529452">
   <FileInfo check="CheckUnusedFunctions">
-    <functiondecl functionName="main" lineNumber="35"/>
-    <functiondecl functionName="Port_2" lineNumber="67"/>
-    <functiondecl functionName="main" lineNumber="35"/>
-    <functiondecl functionName="Port_2" lineNumber="65"/>
+    <functiondecl functionName="main" lineNumber="28"/>
+    <functiondecl functionName="Port_2" lineNumber="70"/>
+    <functiondecl functionName="main" lineNumber="28"/>
+    <functiondecl functionName="Port_2" lineNumber="68"/>
     <functioncall functionName="BIT"/>
     <functioncall functionName="BITS16"/>
     <functioncall functionName="BITS32"/>
@@ -34,11 +17,13 @@
     <functioncall functionName="P0"/>
     <functioncall functionName="P3"/>
     <functioncall functionName="PIN"/>
+    <functioncall functionName="PORT2"/>
     <functioncall functionName="PRIMARY"/>
     <functioncall functionName="SECONDARY"/>
+    <functioncall functionName="T"/>
     <functioncall functionName="TERNARY"/>
     <functioncall functionName="TRUE"/>
-    <functioncall functionName="VECTOR2"/>
+    <functioncall functionName="Vector"/>
     <functioncall functionName="WDTHOLD"/>
     <functioncall functionName="__bis_SR_register"/>
     <functioncall functionName="bit"/>
@@ -48,26 +33,34 @@
     <functioncall functionName="compare"/>
     <functioncall functionName="default"/>
     <functioncall functionName="enableInterrupt"/>
-    <functioncall functionName="f"/>
+    <functioncall functionName="for"/>
     <functioncall functionName="func"/>
     <functioncall functionName="get"/>
     <functioncall functionName="get_index"/>
+    <functioncall functionName="idx"/>
     <functioncall functionName="if"/>
     <functioncall functionName="m_vectors"/>
     <functioncall functionName="makeHandler"/>
     <functioncall functionName="makeInterrupt"/>
+    <functioncall functionName="max"/>
+    <functioncall functionName="move"/>
     <functioncall functionName="noexcept"/>
     <functioncall functionName="orSum"/>
     <functioncall functionName="override"/>
+    <functioncall functionName="p"/>
     <functioncall functionName="return"/>
+    <functioncall functionName="run"/>
     <functioncall functionName="selectInterruptEdge"/>
     <functioncall functionName="set"/>
     <functioncall functionName="setAsInputPinWithPullUp"/>
     <functioncall functionName="setAsOutputPin"/>
     <functioncall functionName="setOutputLowOnPin"/>
+    <functioncall functionName="size"/>
+    <functioncall functionName="sizeof..."/>
     <functioncall functionName="static_cast"/>
     <functioncall functionName="sum"/>
     <functioncall functionName="switch"/>
+    <functioncall functionName="t"/>
     <functioncall functionName="toggle"/>
     <functioncall functionName="toggleOutputOnPin"/>
     <functioncall functionName="true"/>
