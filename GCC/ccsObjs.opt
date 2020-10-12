@@ -1,1 +1,0 @@
-"./Main.o" -T"../msp430fr2433.ld" -Wl,--start-group -lgcc -lc -Wl,--end-group 
