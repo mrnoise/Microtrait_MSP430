@@ -87,30 +87,35 @@ namespace Universal {
 
         template<typename... Vals>
         constexpr void set(const Vals &... vals) noexcept {
+        	static_assert(std::is_integral<Vals...>::value, "Integral (e.g. uint8_t, uint16_t,..) value required.");
             *reg |= (vals | ...);
         }
 
         template<typename... Vals>
         constexpr void clear(const Vals &... vals) noexcept {
+        	static_assert(std::is_integral<Vals...>::value, "Integral (e.g. uint8_t, uint16_t,..) value required.");
             *reg &= ~(vals | ...);
         }
 
         template<typename... Vals>
         constexpr void toggle(const Vals &... vals) noexcept {
+        	static_assert(std::is_integral<Vals...>::value, "Integral (e.g. uint8_t, uint16_t,..) value required.");
             *reg ^= (vals | ...);
         }
 
         template<typename... Vals>
         constexpr void override(const Vals &... vals) noexcept {
+        	static_assert(std::is_integral<Vals...>::value, "Integral (e.g. uint8_t, uint16_t,..) value required.");
             *reg = (vals | ...);
         }
 
         template<typename... Vals>
-        constexpr bool compare(const Vals &... vals) noexcept {
+        [[nodiscard]] constexpr bool compare(const Vals &... vals) noexcept {
+        	static_assert(std::is_integral<Vals...>::value, "Integral (e.g. uint8_t, uint16_t,..) value required.");
             return (*reg & (vals | ...));
         }
 
-        constexpr auto get() noexcept {
+        [[nodiscard]] constexpr auto get() noexcept {
             return *reg;
         }
 
@@ -143,7 +148,7 @@ namespace Universal {
         }
 
         template<typename BIT, typename = typename std::enable_if<enable_Enum_bits<BIT>::enable, BIT>::type, typename... BITS>
-        constexpr bool compare(const BIT &bit, const BITS &... bits) noexcept {
+        [[nodiscard]] constexpr bool compare(const BIT &bit, const BITS &... bits) noexcept {
             typedef typename std::underlying_type<BIT>::type underlying;
             const BIT                                        sum = orSum(bit, bits...);
             return (*reg & static_cast<underlying>(sum));
