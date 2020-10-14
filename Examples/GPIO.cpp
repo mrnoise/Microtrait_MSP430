@@ -39,7 +39,7 @@ void runGpioExample() {
     p1.setAsOutputPin(PIN::P0);
 
     p2.setAsInputPinWithPullUp(PIN::P3);
-    p2.selectInterruptEdge(INT_EDGE::HIGH_TO_LOW, PIN::P3);
+    p2.selectInterruptEdge(GPIO::INT_EDGE::HIGH_TO_LOW, PIN::P3);
     p2.enableInterrupt(PIN::P3);
     p2.clearInterrupt(PIN::P3);
 
