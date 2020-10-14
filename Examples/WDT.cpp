@@ -10,7 +10,7 @@ constexpr auto isr = WDT::Interrupt::makeInterrupt(
         WDT::Interrupt::WDT::WDTA,
         []() {
             GPIO::Port1 p1{};
-            p1.toggleOutputOnPin(PIN::P0);
+            p1.toggleOutputOnPin(GPIO_PIN::P0);
         }));
 #endif
 
@@ -27,8 +27,8 @@ void runWdtExample() {
 #endif
 
     GPIO::Port1 p1{};
-    p1.setOutputLowOnPin(PIN::P0);
-    p1.setAsOutputPin(PIN::P0);
+    p1.setOutputLowOnPin(GPIO_PIN::P0);
+    p1.setAsOutputPin(GPIO_PIN::P0);
 
     MT::Universal::Register<&PM5CTL0> pm5ctl{};
     pm5ctl.clear(LOCKLPM5);
@@ -36,11 +36,12 @@ void runWdtExample() {
 #ifndef MT_MSP430_USE_WDT_COMPILE_TIME_CALLBACKS
     WDT::Interrupt::registerCallback([]() {
         GPIO::Port1 p1{};
-        p1.toggleOutputOnPin(PIN::P0);
+        p1.toggleOutputOnPin(GPIO_PIN::P0);
     });
 #endif
 
-    SFRIE1 |= WDTIE;// Enable WDT interrupt
+    Sfr sfr{};
+    sfr.enableInterrupt(SFR_INT::WATCHDOG_INTERVAL_TIMER);
 
     __bis_SR_register(LPM0_bits | GIE);// Enter LPM0, enable interrupts
     __no_operation();                  // For debug
