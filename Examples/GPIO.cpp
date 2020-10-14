@@ -10,8 +10,8 @@ constexpr auto isr = GPIO::Interrupt::makeInterrupt(
         []() {
             GPIO::Port1 p1{};
             GPIO::Port2 p2{};
-            p2.clearInterrupt(PIN::P3);
-            p1.toggleOutputOnPin(PIN::P0);
+            p2.clearInterrupt(GPIO_PIN::P3);
+            p1.toggleOutputOnPin(GPIO_PIN::P0);
         }));
 #endif
 
@@ -28,20 +28,20 @@ void runGpioExample() {
     GPIO::Interrupt::registerCallback(GPIO::Interrupt::PORTS::PORT2, []() {
         GPIO::Port1 p1{};
         GPIO::Port2 p2{};
-        p2.clearInterrupt(PIN::P3);
-        p1.toggleOutputOnPin(PIN::P0);
+        p2.clearInterrupt(GPIO_PIN::P3);
+        p1.toggleOutputOnPin(GPIO_PIN::P0);
     });
 #endif
 
     GPIO::Port1 p1{};
     GPIO::Port2 p2{};
-    p1.setOutputLowOnPin(PIN::P0);
-    p1.setAsOutputPin(PIN::P0);
+    p1.setOutputLowOnPin(GPIO_PIN::P0);
+    p1.setAsOutputPin(GPIO_PIN::P0);
 
-    p2.setAsInputPinWithPullUp(PIN::P3);
-    p2.selectInterruptEdge(GPIO::INT_EDGE::HIGH_TO_LOW, PIN::P3);
-    p2.enableInterrupt(PIN::P3);
-    p2.clearInterrupt(PIN::P3);
+    p2.setAsInputPinWithPullUp(GPIO_PIN::P3);
+    p2.selectInterruptEdge(GPIO::INT_EDGE::HIGH_TO_LOW, GPIO_PIN::P3);
+    p2.enableInterrupt(GPIO_PIN::P3);
+    p2.clearInterrupt(GPIO_PIN::P3);
 
     __bis_SR_register(GIE);
 }
