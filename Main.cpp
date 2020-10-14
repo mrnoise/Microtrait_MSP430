@@ -1,7 +1,6 @@
 
 //#define RUN_TESTS
 
-#include <stdint.h>
 #include "Examples/GPIO.hpp"
 #include "Examples/WDT.hpp"
 
