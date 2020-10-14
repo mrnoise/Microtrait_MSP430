@@ -17,9 +17,14 @@ constexpr auto isr = WDT::Interrupt::makeInterrupt(
 
 void runWdtExample() {
 
+#ifdef MT_MSP430_USE_DRIVERLIB_COMPATIBILITY
     WDT::WdtA wdt{};
     wdt.initIntervalTimer(WDT::CLOCKSOURCE::SMCLK, WDT::CLOCKDIVIDER::DIV32K);
     wdt.start();
+#else
+    WDT::WdtA wdt{};
+    wdt.startIntervalTimer(WDT::CLOCKSOURCE::SMCLK, WDT::CLOCKDIVIDER::DIV32K);
+#endif
 
     GPIO::Port1 p1{};
     p1.setOutputLowOnPin(PIN::P0);
