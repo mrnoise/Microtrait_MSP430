@@ -1,6 +1,6 @@
 
-#ifndef MICROTRAIT_MSP430_GPIO_PORTINTERRUPT_HPP_
-#define MICROTRAIT_MSP430_GPIO_PORTINTERRUPT_HPP_
+#ifndef MICROTRAIT_MSP430_WDT_WDTAINTERRUPT_HPP_
+#define MICROTRAIT_MSP430_WDT_WDTAINTERRUPT_HPP_
 
 #include "MicroTrait/MSP430/Settings.hpp"
 #include <msp430.h>
@@ -8,20 +8,20 @@
 #include <limits>
 #include <array>
 
+
 namespace MT {
 namespace MSP430 {
-    namespace GPIO {
+    namespace WDT {
         namespace Interrupt {
 
-            enum PORTS {
-                PORT1 = 0,
-                PORT2
+            enum WDT {
+                WDTA = 0,
             };
 
-#ifdef MT_MSP430_USE_GPIO_COMPILE_TIME_CALLBACKS
+#ifdef MT_MSP430_USE_WDT_COMPILE_TIME_CALLBACKS
 
             template<typename T>
-            using IntHandlers = std::pair<PORTS, T>;
+            using IntHandlers = std::pair<WDT, T>;
 
             template<typename... Vector>
             struct Interrupt {
@@ -30,7 +30,7 @@ namespace MSP430 {
                   : m_indexes{ handler.first... }, m_vectors{ std::move(handler.second...) } {
                 }
 
-                [[nodiscard]] constexpr std::size_t get_index(const PORTS p) const noexcept {
+                [[nodiscard]] constexpr std::size_t get_index(const WDT p) const noexcept {
 
                     for (std::size_t idx = 0; idx < m_indexes.size(); ++idx) {
                         if (m_indexes[idx] == p) return idx;
@@ -39,8 +39,8 @@ namespace MSP430 {
                     return std::numeric_limits<std::size_t>::max();
                 }
 
-                std::array<PORTS, sizeof...(Vector)> m_indexes;
-                std::tuple<Vector...>                m_vectors;
+                std::array<WDT, sizeof...(Vector)> m_indexes;
+                std::tuple<Vector...>              m_vectors;
             };
 
 
@@ -50,22 +50,22 @@ namespace MSP430 {
             }
 
             template<typename T>
-            [[nodiscard]] constexpr auto makeHandler(PORTS p, T t) noexcept {
+            [[nodiscard]] constexpr auto makeHandler(WDT p, T t) noexcept {
                 return IntHandlers<T>{ p, std::move(t) };
             }
 
-
 #else
-            extern std::array<void (*)(), 2> PortVectors;
+            extern std::array<void (*)(), 1> WdtVectors;
 
-            constexpr void registerCallback(const PORTS ports, void (*callback)()) noexcept {
-                PortVectors[ports] = callback;
+            constexpr void registerCallback(void (*callback)()) noexcept {
+                WdtVectors[WDTA] = callback;
             };
 #endif
+
         }// namespace Interrupt
-    }    // namespace GPIO
+    }    // namespace WDT
 }// namespace MSP430
 }// namespace MT
 
 
-#endif /* MICROTRAIT_MSP430_GPIO_PORTINTERRUPT_HPP_ */
+#endif /* MICROTRAIT_MSP430_WDT_WDTAINTERRUPT_HPP_ */
