@@ -17,9 +17,10 @@ constexpr auto isr = GPIO::Interrupt::makeInterrupt(
 
 void runGpioExample() {
 
-    MT::Universal::Register<&WDTCTL>  wdt{};
+    WDT::WdtA wdt{};
+    wdt.hold();
+
     MT::Universal::Register<&PM5CTL0> pm5ctl{};
-    wdt.override(WDTPW | WDTHOLD);
     pm5ctl.clear(LOCKLPM5);
 
 
