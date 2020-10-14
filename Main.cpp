@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "Examples/GPIO.hpp"
+#include "Examples/WDT.hpp"
 
 #ifdef RUN_TESTS
 #include "MicroTrait/Tests/TestRunner.hpp"
@@ -16,7 +17,10 @@ int main(void) {
 #endif
 
     //Toggels P1.0 by each press of P2.3 in Interrupt
-    runGpioExample();
+    //runGpioExample();
+
+
+    runWdtExample();
 
     while (1) {
     }
