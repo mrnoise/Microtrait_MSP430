@@ -4,11 +4,11 @@
 
 int main(void) {
 
-    //Toggels P1.0 by each press of P2.3 in Interrupt
-    //runGpioExample();
+    //Toggels P1.0 in interrupt of P2.3 or P1.4
+    runGpioExample();
 
     //Toggels P1.0 in wdt intervall timer interrupt
-    runWdtExample();
+    //runWdtExample();
 
     while (1) {
     }

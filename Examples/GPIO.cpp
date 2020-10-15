@@ -30,6 +30,19 @@ void runGpioExample() {
     //S1 IFG cleared
     GPIO_clearInterrupt(GPIO_PORT_S1, GPIO_PIN_S1);
 
+
+    //Enable S1 internal resistance as pull-Up resistance
+    GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P1, GPIO_PIN4);
+
+    //S1 interrupt enabled
+    GPIO_enableInterrupt(GPIO_PORT_P1, GPIO_PIN4);
+
+    //S1 Hi/Lo edge
+    GPIO_selectInterruptEdge(GPIO_PORT_P1, GPIO_PIN4, GPIO_HIGH_TO_LOW_TRANSITION);
+
+    //S1 IFG cleared
+    GPIO_clearInterrupt(GPIO_PORT_P1, GPIO_PIN4);
+
     PMM_unlockLPM5();
 
     //Enter LPM3 w/interrupt
@@ -38,6 +51,21 @@ void runGpioExample() {
 
 
 // Port 1 interrupt service routine
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector = PORT1_VECTOR
+__interrupt void Port_1(void)
+#elif defined(__GNUC__)
+void __attribute__((interrupt(PORT1_VECTOR))) Port_1(void)
+#else
+#error Compiler not supported!
+#endif
+{
+    GPIO_clearInterrupt(GPIO_PORT_P1, GPIO_PIN4);
+    GPIO_toggleOutputOnPin(GPIO_PORT_LED1, GPIO_PIN_LED1);
+}
+
+
+// Port 2 interrupt service routine
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
 #pragma vector = PORT2_VECTOR
 __interrupt void Port_2(void)
