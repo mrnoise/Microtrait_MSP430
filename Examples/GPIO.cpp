@@ -4,7 +4,17 @@
 using namespace MT::MSP430;
 
 #ifdef MT_MSP430_USE_GPIO_COMPILE_TIME_CALLBACKS
+
 constexpr auto isr = GPIO::Interrupt::makeInterrupt(
+
+    GPIO::Interrupt::makeHandler(
+        GPIO::Interrupt::PORTS::PORT1,
+        []() {
+            GPIO::Port1 p1{};
+            p1.clearInterrupt(GPIO_PIN::P4);
+            p1.toggleOutputOnPin(GPIO_PIN::P0);
+        }),
+
     GPIO::Interrupt::makeHandler(
         GPIO::Interrupt::PORTS::PORT2,
         []() {
@@ -13,6 +23,7 @@ constexpr auto isr = GPIO::Interrupt::makeInterrupt(
             p2.clearInterrupt(GPIO_PIN::P3);
             p1.toggleOutputOnPin(GPIO_PIN::P0);
         }));
+
 #endif
 
 void runGpioExample() {
@@ -25,12 +36,20 @@ void runGpioExample() {
 
 
 #ifndef MT_MSP430_USE_GPIO_COMPILE_TIME_CALLBACKS
+
+    GPIO::Interrupt::registerCallback(GPIO::Interrupt::PORTS::PORT1, []() {
+        GPIO::Port1 p1{};
+        p1.clearInterrupt(GPIO_PIN::P4);
+        p1.toggleOutputOnPin(GPIO_PIN::P0);
+    });
+
     GPIO::Interrupt::registerCallback(GPIO::Interrupt::PORTS::PORT2, []() {
         GPIO::Port1 p1{};
         GPIO::Port2 p2{};
         p2.clearInterrupt(GPIO_PIN::P3);
         p1.toggleOutputOnPin(GPIO_PIN::P0);
     });
+
 #endif
 
     GPIO::Port1 p1{};
@@ -42,6 +61,11 @@ void runGpioExample() {
     p2.selectInterruptEdge(GPIO::INT_EDGE::HIGH_TO_LOW, GPIO_PIN::P3);
     p2.enableInterrupt(GPIO_PIN::P3);
     p2.clearInterrupt(GPIO_PIN::P3);
+
+    p1.setAsInputPinWithPullUp(GPIO_PIN::P4);
+    p1.selectInterruptEdge(GPIO::INT_EDGE::HIGH_TO_LOW, GPIO_PIN::P4);
+    p1.enableInterrupt(GPIO_PIN::P4);
+    p1.clearInterrupt(GPIO_PIN::P4);
 
     __bis_SR_register(GIE);
 }
@@ -58,5 +82,17 @@ void __attribute__((interrupt(PORT2_VECTOR))) Port_2(void)
 #endif
 {
     std::get<isr.get_index(GPIO::Interrupt::PORTS::PORT2)>(isr.m_vectors)();
+}
+
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector = PORT2_VECTOR
+__interrupt void Port_2(void)
+#elif defined(__GNUC__)
+void __attribute__((interrupt(PORT1_VECTOR))) Port_1(void)
+#else
+#error Compiler not supported!
+#endif
+{
+    std::get<isr.get_index(GPIO::Interrupt::PORTS::PORT1)>(isr.m_vectors)();
 }
 #endif
