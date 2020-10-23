@@ -30,8 +30,8 @@ void runWdtExample() {
     p1.setOutputLowOnPin(GPIO::PIN::P0);
     p1.setAsOutputPin(GPIO::PIN::P0);
 
-    MT::Universal::Register<&PM5CTL0> pm5ctl{};
-    pm5ctl.clear(LOCKLPM5);
+    Pmm pmm{};
+    pmm.unlockLPM5();
 
 #ifndef MT_MSP430_USE_WDT_COMPILE_TIME_CALLBACKS
     WDT::Interrupt::registerCallback([]() {

@@ -31,9 +31,8 @@ void runGpioExample() {
     WDT::WdtA wdt{};
     wdt.hold();
 
-    MT::Universal::Register<&PM5CTL0> pm5ctl{};
-    pm5ctl.clear(LOCKLPM5);
-
+    Pmm pmm{};
+    pmm.unlockLPM5();
 
 #ifndef MT_MSP430_USE_GPIO_COMPILE_TIME_CALLBACKS
 
