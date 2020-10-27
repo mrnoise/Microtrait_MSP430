@@ -1,29 +1,27 @@
-#include "Examples/WDT.hpp"
+#include "Examples/WDTA.hpp"
 #include "MicroTrait/MT.hpp"
 
 using namespace MT::MSP430;
 
-
 #ifdef MT_MSP430_USE_WDT_COMPILE_TIME_CALLBACKS
-constexpr auto isr = WDT::Interrupt::makeInterrupt(
-    WDT::Interrupt::makeHandler(
-        WDT::Interrupt::WDT::WDTA,
+constexpr auto isr = WDTA::Interrupt::makeInterrupt(
+    WDTA::Interrupt::makeHandler(
+        WDTA::Interrupt::WDTA::VEC1,
         []() {
             GPIO::Port1 p1{};
             p1.toggleOutputOnPin(GPIO::PIN::P0);
         }));
 #endif
 
-
 void runWdtExample() {
 
 #ifdef MT_MSP430_USE_DRIVERLIB_COMPATIBILITY
-    WDT::WdtA wdt{};
-    wdt.initIntervalTimer(WDT::CLOCKSOURCE::SMCLK, WDT::CLOCKDIVIDER::DIV32K);
+    WdtA wdt{};
+    wdt.initIntervalTimer(WDTA::CLOCKSOURCE::SMCLK, WDTA::CLOCKDIVIDER::DIV32K);
     wdt.start();
 #else
-    WDT::WdtA wdt{};
-    wdt.startIntervalTimer(WDT::CLOCKSOURCE::SMCLK, WDT::CLOCKDIVIDER::DIV32K);
+    WdtA wdt{};
+    wdt.startIntervalTimer(WDTA::CLOCKSOURCE::SMCLK, WDTA::CLOCKDIVIDER::DIV32K);
 #endif
 
     GPIO::Port1 p1{};
@@ -34,7 +32,7 @@ void runWdtExample() {
     pmm.unlockLPM5();
 
 #ifndef MT_MSP430_USE_WDT_COMPILE_TIME_CALLBACKS
-    WDT::Interrupt::registerCallback([]() {
+    WDTA::Interrupt::registerCallback([]() {
         GPIO::Port1 p1{};
         p1.toggleOutputOnPin(GPIO::PIN::P0);
     });
@@ -57,6 +55,6 @@ __attribute__((interrupt(WDT_VECTOR)))
 #endif
     void
     WDT_A_ISR(void) {
-    std::get<isr.get_index(WDT::Interrupt::WDTA)>(isr.m_vectors)();
+    std::get<isr.get_index(WDTA::Interrupt::VEC1)>(isr.m_vectors)();
 }
 #endif

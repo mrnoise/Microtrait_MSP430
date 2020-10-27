@@ -2,7 +2,7 @@
 //#define RUN_TESTS
 
 #include "Examples/GPIO.hpp"
-#include "Examples/WDT.hpp"
+#include "Examples/WDTA.hpp"
 
 #ifdef RUN_TESTS
 #include "MicroTrait/Tests/TestRunner.hpp"

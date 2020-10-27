@@ -28,7 +28,7 @@ constexpr auto isr = GPIO::Interrupt::makeInterrupt(
 
 void runGpioExample() {
 
-    WDT::WdtA wdt{};
+    WdtA wdt{};
     wdt.hold();
 
     Pmm pmm{};
