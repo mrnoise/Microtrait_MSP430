@@ -35,5 +35,5 @@ void __attribute__((interrupt(TIMER0_A0_VECTOR))) Timer_A(void)
 #endif
 {
     P1OUT ^= BIT0;
-    TA0CCR0 += 50000;// Add Offset to TACCR0
+    TA0CCR0 += COMPARE_VALUE;// Add Offset to TACCR0
 }
