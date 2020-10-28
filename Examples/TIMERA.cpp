@@ -15,7 +15,8 @@ void runTimerAExample() {
     // previously configured port settings
     PM5CTL0 &= ~LOCKLPM5;
 
-    TA0CCTL0 |= CCIE;// TACCR0 interrupt enabled
+    TA0CCTL0 &= ~CCIFG;//Clear Timer Interrrupt Flag
+    TA0CCTL0 |= CCIE;  // TACCR0 interrupt enabled
     TA0CCR0 = COMPARE_VALUE;
     TA0CTL |= TASSEL__SMCLK | MC__CONTINUOUS;// SMCLK, continuous mode
 
@@ -35,5 +36,5 @@ void __attribute__((interrupt(TIMER0_A0_VECTOR))) Timer_A(void)
 #endif
 {
     P1OUT ^= BIT0;
-    TA0CCR0 += COMPARE_VALUE;// Add Offset to TACCR0
+    TA0CCR0 = COMPARE_VALUE;// Add Offset to TACCR0
 }
