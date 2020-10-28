@@ -1,6 +1,6 @@
 #include "Examples/WDT.hpp"
 
-#include "driverlib/MSP430FR2xx_4xx/driverlib.h"
+#include "driverlib/MSP430FR5xx_6xx/driverlib.h"
 
 #define GPIO_PORT_LED1 GPIO_PORT_P1
 #define GPIO_PIN_LED1  GPIO_PIN0
