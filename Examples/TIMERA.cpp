@@ -18,14 +18,6 @@ void runTimerAExample() {
 
     PMM_unlockLPM5();
 
-    //Start timer in continuous mode sourced by SMCLK
-    Timer_A_initContinuousModeParam initContParam = {};
-    initContParam.clockSource                     = TIMER_A_CLOCKSOURCE_SMCLK;
-    initContParam.clockSourceDivider              = TIMER_A_CLOCKSOURCE_DIVIDER_1;
-    initContParam.timerInterruptEnable_TAIE       = TIMER_A_TAIE_INTERRUPT_DISABLE;
-    initContParam.timerClear                      = TIMER_A_DO_CLEAR;
-    initContParam.startTimer                      = false;
-    Timer_A_initContinuousMode(TIMER_A0_BASE, &initContParam);
 
     //Initiaze compare mode
     Timer_A_clearCaptureCompareInterrupt(TIMER_A1_BASE, TIMER_A_CAPTURECOMPARE_REGISTER_0);
@@ -37,7 +29,14 @@ void runTimerAExample() {
     initCompParam.compareValue                 = COMPARE_VALUE;
     Timer_A_initCompareMode(TIMER_A0_BASE, &initCompParam);
 
-    Timer_A_startCounter(TIMER_A0_BASE, TIMER_A_CONTINUOUS_MODE);
+    //Start timer in continuous mode sourced by SMCLK
+    Timer_A_initContinuousModeParam initContParam = {};
+    initContParam.clockSource                     = TIMER_A_CLOCKSOURCE_SMCLK;
+    initContParam.clockSourceDivider              = TIMER_A_CLOCKSOURCE_DIVIDER_1;
+    initContParam.timerInterruptEnable_TAIE       = TIMER_A_TAIE_INTERRUPT_DISABLE;
+    initContParam.timerClear                      = TIMER_A_DO_CLEAR;
+    initContParam.startTimer                      = true;
+    Timer_A_initContinuousMode(TIMER_A0_BASE, &initContParam);
 
     //Enter LPM0, enable interrupts
     __bis_SR_register(LPM0_bits + GIE);
