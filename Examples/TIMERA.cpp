@@ -24,7 +24,7 @@ void runTimerAExample() {
         TIMERA::CLOCK_DIV::DIV1,
         TIMERA::GLOBAL_INT::DISABLE,
         TIMERA::CLEAR_COUNT_DIR::ENABLE,
-        false
+        true
     };
 
     constexpr TIMERA::initCompare paramCom{
@@ -34,10 +34,10 @@ void runTimerAExample() {
         COMPARE_VALUE
     };
 
-    ta0.initContinuousMode(param);
+
     ta0.clearCaptureCompareInterrupt(TIMERA::CAPTURE_COMPARE::REGISTER0);
     ta0.initCompareMode(paramCom);
-    ta0.startCounter(TIMERA::MODE::CONTINUOUS);
+    ta0.initContinuousMode(param);
 
     //Enter LPM0, enable interrupts
     __bis_SR_register(LPM0_bits + GIE);
