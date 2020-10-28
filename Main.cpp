@@ -16,7 +16,7 @@ int main(void) {
     MT::Tests::run();
 #endif
 
-    //Toggels P1.0 in Interrupt of P2.3 or P1.4
+    //Toggels P1.0 in Interrupt of P1.1 or P2.4
     //runGpioExample();
 
     //Toggels P1.0 in wdt intervall timer interrupt
