@@ -1,4 +1,4 @@
-#include "GPIO.hpp"
+#include "TimerA.hpp"
 #include "driverlib/MSP430FR2xx_4xx/driverlib.h"
 
 #define GPIO_PORT_LED1 GPIO_PORT_P1
@@ -16,10 +16,6 @@ void runTimerAExample() {
         GPIO_PORT_LED1,
         GPIO_PIN_LED1);
 
-    /*
-	 * Disable the GPIO power-on default high-impedance mode to activate
-	 * previously configured port settings
-	 */
     PMM_unlockLPM5();
 
     //Start timer in continuous mode sourced by SMCLK
@@ -29,21 +25,19 @@ void runTimerAExample() {
     initContParam.timerInterruptEnable_TAIE       = TIMER_A_TAIE_INTERRUPT_DISABLE;
     initContParam.timerClear                      = TIMER_A_DO_CLEAR;
     initContParam.startTimer                      = false;
-    Timer_A_initContinuousMode(TIMER_A1_BASE, &initContParam);
+    Timer_A_initContinuousMode(TIMER_A0_BASE, &initContParam);
 
     //Initiaze compare mode
-    Timer_A_clearCaptureCompareInterrupt(TIMER_A1_BASE,
-        TIMER_A_CAPTURECOMPARE_REGISTER_0);
+    Timer_A_clearCaptureCompareInterrupt(TIMER_A1_BASE, TIMER_A_CAPTURECOMPARE_REGISTER_0);
 
     Timer_A_initCompareModeParam initCompParam = {};
     initCompParam.compareRegister              = TIMER_A_CAPTURECOMPARE_REGISTER_0;
     initCompParam.compareInterruptEnable       = TIMER_A_CAPTURECOMPARE_INTERRUPT_ENABLE;
     initCompParam.compareOutputMode            = TIMER_A_OUTPUTMODE_OUTBITVALUE;
     initCompParam.compareValue                 = COMPARE_VALUE;
-    Timer_A_initCompareMode(TIMER_A1_BASE, &initCompParam);
+    Timer_A_initCompareMode(TIMER_A0_BASE, &initCompParam);
 
-    Timer_A_startCounter(TIMER_A1_BASE,
-        TIMER_A_CONTINUOUS_MODE);
+    Timer_A_startCounter(TIMER_A0_BASE, TIMER_A_CONTINUOUS_MODE);
 
     //Enter LPM0, enable interrupts
     __bis_SR_register(LPM0_bits + GIE);
@@ -53,22 +47,16 @@ void runTimerAExample() {
 }
 
 
-//******************************************************************************
-//
-//This is the TIMER1_A0 interrupt vector service routine.
-//
-//******************************************************************************
+// Timer A0 interrupt service routine
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
-#pragma vector = TIMER1_A0_VECTOR
-__interrupt
+#pragma vector = TIMER0_A0_VECTOR
+__interrupt void Timer_A(void)
 #elif defined(__GNUC__)
-__attribute__((interrupt(TIMER1_A0_VECTOR)))
+void __attribute__((interrupt(TIMER0_A0_VECTOR))) Timer_A(void)
+#else
+#error Compiler not supported!
 #endif
-    void
-    TIMER1_A0_ISR(void) {
-    uint16_t compVal = Timer_A_getCaptureCompareCount(TIMER_A1_BASE,
-                           TIMER_A_CAPTURECOMPARE_REGISTER_0)
-                       + COMPARE_VALUE;
+{
 
     //Toggle LED1
     GPIO_toggleOutputOnPin(
@@ -76,7 +64,7 @@ __attribute__((interrupt(TIMER1_A0_VECTOR)))
         GPIO_PIN_LED1);
 
     //Add Offset to CCR0
-    Timer_A_setCompareValue(TIMER_A1_BASE,
+    Timer_A_setCompareValue(TIMER_A0_BASE,
         TIMER_A_CAPTURECOMPARE_REGISTER_0,
-        compVal);
+        COMPARE_VALUE);
 }
