@@ -1,21 +1,29 @@
-
-//#define RUN_TESTS
-
 #include "Examples/GPIO.hpp"
 #include "Examples/WDTA.hpp"
 #include "Examples/TIMERA.hpp"
 
 #ifdef RUN_TESTS
+#include "MicroTrait/MT.hpp"
 #include "MicroTrait/Tests/TestRunner.hpp"
+using namespace MT::MSP430;
 #endif
 
 
 int main(void) {
 
 #ifdef RUN_TESTS
-    MT::Tests::run();
-#endif
+    WdtA wdt{};
+    wdt.hold();
 
+    Pmm pmm{};
+    pmm.unlockLPM5();
+
+    MT::Tests::run();
+
+    GPIO::Port1 p1{};
+    p1.setOutputHighOnPin(GPIO::PIN::P0);
+    p1.setAsOutputPin(GPIO::PIN::P0);
+#else
     //Toggels P1.0 in Interrupt of P1.1 or P2.4
     //runGpioExample();
 
@@ -24,6 +32,8 @@ int main(void) {
 
     //Toggels P1.0 in TimerA CCR0 interrupt
     runTimerAExample();
+#endif
+
 
     while (1) {
     }
