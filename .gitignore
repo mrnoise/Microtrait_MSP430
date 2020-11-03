@@ -33,3 +33,4 @@ packages/
 /GCC/
 /GCC_Debug/
 /GCC_TEST/
+/MT_Test-cppcheck-build-dir/
