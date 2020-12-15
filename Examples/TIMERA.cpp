@@ -22,7 +22,7 @@ void runTimerAExample() {
     constexpr TIMERA::initContinuous param{
         TIMERA::CLOCKSOURCE::SMCLK,
         TIMERA::CLOCK_DIV::DIV1,
-        TIMERA::GLOBAL_INT::DISABLE,
+        TIMERA::TAIE_INT::DISABLE,
         TIMERA::CLEAR_COUNT_DIR::ENABLE,
         true
     };
