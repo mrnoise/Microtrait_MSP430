@@ -17,6 +17,41 @@ void runTimerAExample() {
     Pmm pmm{};
     pmm.unlockLPM5();
 
+
+#ifndef MT_MSP430_USE_TIMERA_COMPILE_TIME_CALLBACKS
+
+    GPIO::Interrupt::Port1 int1;
+    int1.registerCallback([](GPIO::PIN pin) {
+        if (pin == GPIO::PIN::P1) {
+            GPIO::Port1 p1{};
+            p1.toggleOutputOnPin(GPIO::PIN::P0);
+        }
+    });
+
+    GPIO::Interrupt::Port2 int2;
+    int2.registerCallback([](GPIO::PIN pin) {
+        if (pin == GPIO::PIN::P4) {
+            GPIO::Port1 p1{};
+            p1.toggleOutputOnPin(GPIO::PIN::P0);
+        }
+    });
+
+#endif
+
+#ifdef MT_MSP430_USE_TIMERA_COMPILE_TIME_CALLBACKS
+    TIMERA::Interrupt::TA0 int0{
+        [](TIMERA::Interrupt::SOURCE src) {
+            if (src == TIMERA::Interrupt::SOURCE::REGISTER0) {
+                GPIO::Port1 p1{};
+                p1.toggleOutputOnPin(GPIO::PIN::P0);
+
+                TIMERA::TA0 ta0;
+                ta0.setCompareValue(TIMERA::CAPTURE_COMPARE::REGISTER0, COMPARE_VALUE);
+            }
+        }
+    };
+#endif
+
     TIMERA::TA0 ta0;
 
     constexpr TIMERA::initContinuous param{
@@ -44,22 +79,4 @@ void runTimerAExample() {
 
     //For debugger
     __no_operation();
-}
-
-
-// Timer A0 interrupt service routine
-#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
-#pragma vector = TIMER0_A0_VECTOR
-__interrupt void Timer_A(void)
-#elif defined(__GNUC__)
-void __attribute__((interrupt(TIMER0_A0_VECTOR))) Timer_A(void)
-#else
-#error Compiler not supported!
-#endif
-{
-    GPIO::Port1 p1{};
-    p1.toggleOutputOnPin(GPIO::PIN::P0);
-
-    TIMERA::TA0 ta0;
-    ta0.setCompareValue(TIMERA::CAPTURE_COMPARE::REGISTER0, COMPARE_VALUE);
 }
