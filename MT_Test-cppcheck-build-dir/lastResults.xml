@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <results version="2">
-    <cppcheck version="2.2"/>
+    <cppcheck version="2.3"/>
     <errors>
-        <error id="unusedFunction" severity="style" msg="The function &amp;#039;Port_2&amp;#039; is never used." verbose="The function &amp;#039;Port_2&amp;#039; is never used." cwe="561" sinceDate="09.10.2020">
-            <location file="Main.cpp" line="68"/>
+        <error id="unusedFunction" severity="style" msg="The function &amp;#039;Timer_A&amp;#039; is never used." verbose="The function &amp;#039;Timer_A&amp;#039; is never used." cwe="561" sinceDate="26.01.2021">
+            <location file="Examples\TIMERA.cpp" line="53"/>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &amp;#039;WDT_A_ISR&amp;#039; is never used." verbose="The function &amp;#039;WDT_A_ISR&amp;#039; is never used." cwe="561" sinceDate="26.01.2021">
+            <location file="MicroTrait\MSP430\WDT\WdtAInterrupt.cpp" line="19"/>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &amp;#039;runGpioExample&amp;#039; is never used." verbose="The function &amp;#039;runGpioExample&amp;#039; is never used." cwe="561" sinceDate="26.01.2021">
+            <location file="Examples\GPIO.cpp" line="7"/>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &amp;#039;runWdtExample&amp;#039; is never used." verbose="The function &amp;#039;runWdtExample&amp;#039; is never used." cwe="561" sinceDate="26.01.2021">
+            <location file="Examples\WDTA.cpp" line="16"/>
         </error>
     </errors>
 </results>
