@@ -19,8 +19,8 @@ void runEusciAExample() {
     // Configure USCI_A0 for UART mode
     UCA1CTL1 |= UCSWRST;
     UCA1CTL1 = UCSSEL__SMCLK;//
-    UCA1BRW  = 6;            // 9600 baud
-    UCA1MCTLW |= 0x5300;     // 1E6/9600 - INT(1E6/9600)=0.41
+    UCA1BR0  = 6;            // 9600 baud
+    UCA1MCTLW |= 0x1181;     // 1E6/9600 - INT(1E6/9600)
 
     UCA1CTL1 &= ~UCSWRST;// release from reset
     UCA1IFG &= ~UCRXIFG; // Clear USCI_A0 RX interrupt
