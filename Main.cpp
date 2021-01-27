@@ -1,6 +1,7 @@
 #include "Examples/GPIO.hpp"
 #include "Examples/WDT.hpp"
 #include "Examples/TimerA.hpp"
+#include "Examples/EUSCIA.hpp"
 
 int main(void) {
 
@@ -11,7 +12,10 @@ int main(void) {
     //runWdtExample();
 
     //Toggels P1.0 in Timer A interrupt
-    runTimerAExample();
+    //runTimerAExample();
+
+    //UART Ping Pong between RX and TX
+    runEusciAExample();
 
     while (1) {
     }
