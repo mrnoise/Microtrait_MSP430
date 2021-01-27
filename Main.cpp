@@ -1,6 +1,7 @@
 #include "Examples/GPIO.hpp"
 #include "Examples/WDTA.hpp"
 #include "Examples/TIMERA.hpp"
+#include "Examples/EUSCIA.hpp"
 
 #ifdef RUN_TESTS
 #include "MicroTrait/MT.hpp"
@@ -31,7 +32,10 @@ int main(void) {
     //runWdtExample();
 
     //Toggels P1.0 in TimerA CCR0 interrupt
-    runTimerAExample();
+    //runTimerAExample();
+
+    //
+    runEusciAExample();
 #endif
 
 
