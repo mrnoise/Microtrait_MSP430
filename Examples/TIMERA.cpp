@@ -3,7 +3,7 @@
 
 using namespace MT::MSP430;
 
-#define COMPARE_VALUE 50000
+static constexpr uint16_t c_compareValue = 50000;
 
 void runTimerAExample() {
 
@@ -25,7 +25,7 @@ void runTimerAExample() {
                 p1.toggleOutputOnPin(GPIO::PIN::P0);
 
                 TIMERA::TA0 ta0;
-                ta0.setCompareValue(TIMERA::CAPTURE_COMPARE::REGISTER0, COMPARE_VALUE);
+                ta0.setCompareValue(TIMERA::CAPTURE_COMPARE::REGISTER0, c_compareValue);
             }
         }
     };
@@ -40,7 +40,7 @@ void runTimerAExample() {
                 p1.toggleOutputOnPin(GPIO::PIN::P0);
 
                 TIMERA::TA0 ta0;
-                ta0.setCompareValue(TIMERA::CAPTURE_COMPARE::REGISTER0, COMPARE_VALUE);
+                ta0.setCompareValue(TIMERA::CAPTURE_COMPARE::REGISTER0, c_compareValue);
             }
         });
 #endif
@@ -59,7 +59,7 @@ void runTimerAExample() {
         TIMERA::CAPTURE_COMPARE::REGISTER0,
         TIMERA::CAPTURE_COMPARE_INT::ENABLE,
         TIMERA::COMPARE_OUTPUT::BITVALUE,
-        COMPARE_VALUE
+        c_compareValue
     };
 
 
@@ -69,7 +69,4 @@ void runTimerAExample() {
 
     //Enter LPM0, enable interrupts
     __bis_SR_register(LPM0_bits + GIE);
-
-    //For debugger
-    __no_operation();
 }
