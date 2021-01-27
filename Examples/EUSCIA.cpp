@@ -1,11 +1,16 @@
-#include "EUSCIA.hpp"
+#include "Examples/Settings.hpp"
 #include "MicroTrait/MT.hpp"
 
 using namespace MT::MSP430;
 
+
+#ifdef EXAMPLE_RUN_EUSCIA
 static constexpr uint8_t c_checkByte = 123;
+#endif
 
 void runEusciAExample() {
+
+#ifdef EXAMPLE_RUN_EUSCIA
 
     WdtA wdt{};
     wdt.hold();
@@ -19,6 +24,41 @@ void runEusciAExample() {
 
     Pmm pmm{};
     pmm.unlockLPM5();
+
+#ifdef MT_MSP430_USE_EUSCIA_UART_COMPILE_TIME_CALLBACKS
+    constexpr static EUSCIA::UART::Interrupt::A1 int1{
+        []([[maybe_unused]] const EUSCIA::UART::INT src) {
+            EUSCIA::UART::A1 a1;
+            const uint8_t    rx = a1.receiveData();
+            if (rx != c_checkByte)// Check value
+            {
+                GPIO::Port1 p1;
+                p1.setOutputHighOnPin(GPIO::PIN::P0);
+
+                while (1)
+                    ;
+            }
+            __bic_SR_register_on_exit(CPUOFF);// Exit LPM0 on reti
+        }
+    };
+
+#else
+#warning not working
+    static EUSCIA::UART::Interrupt::A1 int1;
+    int1.setIntrinsic(EUSCIA::UART::Interrupt::INTRINSICS::LEAVE_LOW_POWER);
+    int1.registerCallback(
+        []([[maybe_unused]] const EUSCIA::UART::INT src) {
+            EUSCIA::UART::A1 a1;
+            const uint8_t    rx = a1.receiveData();
+            if (rx != c_checkByte)// Check value
+            {
+                GPIO::Port1 p1;
+                p1.setOutputHighOnPin(GPIO::PIN::P0);
+                while (1)
+                    ;
+            }
+        });
+#endif
 
     constexpr EUSCIA::UART::initParam param{
         // Baudrate 9600 at 1MHz SMCLCK
@@ -44,35 +84,5 @@ void runEusciAExample() {
         a1.transmitData(c_checkByte);
         __bis_SR_register(LPM0_bits | GIE);// Enter LPM0, interrupts enabled
     }
-};
-
-
-#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
-#pragma vector = USCI_A1_VECTOR
-__interrupt
-#elif defined(__GNUC__)
-__attribute__((interrupt(USCI_A1_VECTOR)))
 #endif
-    void
-    USCI_A1_ISR(void) {
-    switch (__even_in_range(UCA1IV, USCI_UART_UCTXCPTIFG)) {
-        case USCI_NONE: break;
-        case USCI_UART_UCRXIFG: {
-            EUSCIA::UART::A1 a1;
-            const uint8_t    rx = a1.receiveData();
-            if (rx != c_checkByte)// Check value
-            {
-                GPIO::Port1 p1;
-                p1.setOutputHighOnPin(GPIO::PIN::P0);
-
-                while (1)
-                    ;
-            }
-        } break;
-        case USCI_UART_UCTXIFG: break;
-        case USCI_UART_UCSTTIFG: break;
-        case USCI_UART_UCTXCPTIFG: break;
-    }
-
-    __bic_SR_register_on_exit(CPUOFF);// Exit LPM0 on reti
-}
+};
