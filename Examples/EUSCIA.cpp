@@ -13,6 +13,7 @@ void runEusciAExample() {
         GPIO_PRIMARY_MODULE_FUNCTION);
 
     GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0);
 
     PMM_unlockLPM5();
 
