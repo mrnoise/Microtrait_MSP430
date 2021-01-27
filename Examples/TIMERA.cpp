@@ -17,30 +17,9 @@ void runTimerAExample() {
     Pmm pmm{};
     pmm.unlockLPM5();
 
-
-#ifndef MT_MSP430_USE_TIMERA_COMPILE_TIME_CALLBACKS
-
-    GPIO::Interrupt::Port1 int1;
-    int1.registerCallback([](GPIO::PIN pin) {
-        if (pin == GPIO::PIN::P1) {
-            GPIO::Port1 p1{};
-            p1.toggleOutputOnPin(GPIO::PIN::P0);
-        }
-    });
-
-    GPIO::Interrupt::Port2 int2;
-    int2.registerCallback([](GPIO::PIN pin) {
-        if (pin == GPIO::PIN::P4) {
-            GPIO::Port1 p1{};
-            p1.toggleOutputOnPin(GPIO::PIN::P0);
-        }
-    });
-
-#endif
-
 #ifdef MT_MSP430_USE_TIMERA_COMPILE_TIME_CALLBACKS
     constexpr static TIMERA::Interrupt::TA0 int0{
-        []([[maybe_unused]] const TIMERA::Interrupt::SOURCE src) {
+        [](const TIMERA::Interrupt::SOURCE src) {
             if (src == TIMERA::Interrupt::SOURCE::REGISTER0) {
                 GPIO::Port1 p1{};
                 p1.toggleOutputOnPin(GPIO::PIN::P0);
@@ -50,6 +29,20 @@ void runTimerAExample() {
             }
         }
     };
+
+#else
+
+    TIMERA::Interrupt::TA0 int0;
+    int0.registerCallback(
+        [](const TIMERA::Interrupt::SOURCE src) {
+            if (src == TIMERA::Interrupt::SOURCE::REGISTER0) {
+                GPIO::Port1 p1{};
+                p1.toggleOutputOnPin(GPIO::PIN::P0);
+
+                TIMERA::TA0 ta0;
+                ta0.setCompareValue(TIMERA::CAPTURE_COMPARE::REGISTER0, COMPARE_VALUE);
+            }
+        });
 #endif
 
     TIMERA::TA0 ta0;
