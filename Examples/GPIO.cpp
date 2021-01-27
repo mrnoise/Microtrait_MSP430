@@ -1,9 +1,11 @@
-#include "GPIO.hpp"
+#include "Examples/Settings.hpp"
 #include "MicroTrait/MT.hpp"
 
 using namespace MT::MSP430;
 
 void runGpioExample() {
+
+#ifdef EXAMPLE_RUN_GPIO
 
     WdtA wdt{};
     wdt.hold();
@@ -59,4 +61,6 @@ void runGpioExample() {
     p1.clearInterrupt(GPIO::PIN::P1);
 
     __bis_SR_register(GIE);
+
+#endif
 }

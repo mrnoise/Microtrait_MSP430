@@ -1,9 +1,11 @@
-#include "Examples/WDTA.hpp"
+#include "Examples/Settings.hpp"
 #include "MicroTrait/MT.hpp"
 
 using namespace MT::MSP430;
 
 void runWdtExample() {
+
+#ifdef EXAMPLE_RUN_WDTA
 
 #ifdef MT_MSP430_USE_DRIVERLIB_COMPATIBILITY
     WdtA wdt{};
@@ -45,4 +47,6 @@ void runWdtExample() {
 
     __bis_SR_register(LPM0_bits | GIE);// Enter LPM0, enable interrupts
     __no_operation();                  // For debug
+
+#endif
 };

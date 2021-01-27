@@ -1,7 +1,4 @@
-#include "Examples/GPIO.hpp"
-#include "Examples/WDTA.hpp"
-#include "Examples/TIMERA.hpp"
-#include "Examples/EUSCIA.hpp"
+#include "Examples/Settings.hpp"
 
 #ifdef RUN_TESTS
 #include "MicroTrait/MT.hpp"
@@ -25,19 +22,28 @@ int main(void) {
     p1.setOutputHighOnPin(GPIO::PIN::P0);
     p1.setAsOutputPin(GPIO::PIN::P0);
 #else
+
+#ifdef EXAMPLE_RUN_GPIO
     //Toggels P1.0 in Interrupt of P1.1 or P2.4
-    //runGpioExample();
+    runGpioExample();
+#endif
 
+#ifdef EXAMPLE_RUN_WDTA
     //Toggels P1.0 in wdt intervall timer interrupt
-    //runWdtExample();
+    runWdtExample();
+#endif
 
+#ifdef EXAMPLE_RUN_TIMERA
     //Toggels P1.0 in TimerA CCR0 interrupt
-    //runTimerAExample();
+    runTimerAExample();
+#endif
 
+#ifdef EXAMPLE_RUN_EUSCIA
     //UART Ping Pong between RX and TX
     runEusciAExample();
 #endif
 
+#endif
 
     while (1) {
     }

@@ -1,11 +1,15 @@
-#include "GPIO.hpp"
+#include "Examples/Settings.hpp"
 #include "MicroTrait/MT.hpp"
 
 using namespace MT::MSP430;
 
+#ifdef EXAMPLE_RUN_TIMERA
 static constexpr uint16_t c_compareValue = 50000;
+#endif
 
 void runTimerAExample() {
+
+#ifdef EXAMPLE_RUN_TIMERA
 
     WdtA wdt{};
     wdt.hold();
@@ -69,4 +73,5 @@ void runTimerAExample() {
 
     //Enter LPM0, enable interrupts
     __bis_SR_register(LPM0_bits + GIE);
+#endif
 }
