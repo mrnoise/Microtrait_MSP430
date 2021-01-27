@@ -11,22 +11,6 @@ void runGpioExample() {
     Pmm pmm{};
     pmm.unlockLPM5();
 
-#ifndef MT_MSP430_USE_GPIO_COMPILE_TIME_CALLBACKS
-
-    GPIO::Interrupt::Port1 int1;
-    int1.registerCallback([]([[maybe_unused]] GPIO::PIN pin) {
-        GPIO::Port1 p1{};
-        p1.toggleOutputOnPin(GPIO::PIN::P0);
-    });
-
-    GPIO::Interrupt::Port2 int2;
-    int2.registerCallback([]([[maybe_unused]] GPIO::PIN pin) {
-        GPIO::Port1 p1{};
-        p1.toggleOutputOnPin(GPIO::PIN::P0);
-    });
-
-#endif
-
 #ifdef MT_MSP430_USE_GPIO_COMPILE_TIME_CALLBACKS
 
     constexpr static GPIO::Interrupt::Port1 int1{
@@ -42,6 +26,20 @@ void runGpioExample() {
             p1.toggleOutputOnPin(GPIO::PIN::P0);
         }
     };
+
+#else
+
+    GPIO::Interrupt::Port1 int1;
+    int1.registerCallback([]([[maybe_unused]] const GPIO::PIN pin) {
+        GPIO::Port1 p1{};
+        p1.toggleOutputOnPin(GPIO::PIN::P0);
+    });
+
+    GPIO::Interrupt::Port2 int2;
+    int2.registerCallback([]([[maybe_unused]] const GPIO::PIN pin) {
+        GPIO::Port1 p1{};
+        p1.toggleOutputOnPin(GPIO::PIN::P0);
+    });
 
 #endif
 

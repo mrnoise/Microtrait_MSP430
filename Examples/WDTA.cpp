@@ -21,21 +21,23 @@ void runWdtExample() {
     Pmm pmm{};
     pmm.unlockLPM5();
 
-#ifndef MT_MSP430_USE_WDT_COMPILE_TIME_CALLBACKS
-    WDTA::Interrupt::WDT inter;
-    inter.registerCallback([]() {
-        GPIO::Port1 p1{};
-        p1.toggleOutputOnPin(GPIO::PIN::P0);
-    });
-#endif
-
 #ifdef MT_MSP430_USE_WDT_COMPILE_TIME_CALLBACKS
+
     constexpr static WDTA::Interrupt::WDT inter{
         []() {
             GPIO::Port1 p1{};
             p1.toggleOutputOnPin(GPIO::PIN::P0);
         }
     };
+
+#else
+
+    WDTA::Interrupt::WDT inter;
+    inter.registerCallback([]() {
+        GPIO::Port1 p1{};
+        p1.toggleOutputOnPin(GPIO::PIN::P0);
+    });
+
 #endif
 
     Sfr sfr{};
