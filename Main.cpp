@@ -34,7 +34,7 @@ int main(void) {
     //Toggels P1.0 in TimerA CCR0 interrupt
     //runTimerAExample();
 
-    //
+    //UART Ping Pong between RX and TX
     runEusciAExample();
 #endif
 
