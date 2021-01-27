@@ -30,7 +30,7 @@ void runWdtExample() {
 #endif
 
 #ifdef MT_MSP430_USE_WDT_COMPILE_TIME_CALLBACKS
-    WDTA::Interrupt::WDT inter{
+    constexpr static WDTA::Interrupt::WDT inter{
         []() {
             GPIO::Port1 p1{};
             p1.toggleOutputOnPin(GPIO::PIN::P0);

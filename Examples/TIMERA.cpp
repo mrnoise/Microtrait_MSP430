@@ -39,8 +39,8 @@ void runTimerAExample() {
 #endif
 
 #ifdef MT_MSP430_USE_TIMERA_COMPILE_TIME_CALLBACKS
-    TIMERA::Interrupt::TA0 int0{
-        [](TIMERA::Interrupt::SOURCE src) {
+    constexpr static TIMERA::Interrupt::TA0 int0{
+        []([[maybe_unused]] const TIMERA::Interrupt::SOURCE src) {
             if (src == TIMERA::Interrupt::SOURCE::REGISTER0) {
                 GPIO::Port1 p1{};
                 p1.toggleOutputOnPin(GPIO::PIN::P0);
