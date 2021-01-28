@@ -21,7 +21,7 @@
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROJECT.MSP430FR6989.ccxml.TI MSP430 USB1/MSP430" value="Microtrait_Test"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_TARGET_CONFIG" value="${target_config_active_default:Microtrait_Test}"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.MSP430FR2433.ccxml.TI MSP430 USB1/MSP430" value="C:\Users\fuchs\Desktop\Trunk_local\CCS\GIT\Microtrait_MSP430\GCC_Debug\Microtrait_Test.out"/>
-<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.MSP430FR6989.ccxml.TI MSP430 USB1/MSP430" value="C:\Users\fuchs\Desktop\Trunk_local\CCS\GIT\Microtrait_MSP430\GCC_Debug\Microtrait_Test.out"/>
+<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.MSP430FR6989.ccxml.TI MSP430 USB1/MSP430" value="C:\Users\fuchs\Desktop\Trunk_local\CCS\GIT\Microtrait_MSP430\GCC_TEST\Microtrait_Test.out"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/Microtrait_Test"/>
 </listAttribute>
