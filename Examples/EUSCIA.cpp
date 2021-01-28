@@ -3,7 +3,6 @@
 
 using namespace MT::MSP430;
 
-
 #ifdef EXAMPLE_RUN_EUSCIA
 static constexpr uint8_t c_checkByte = 123;
 #endif
@@ -41,11 +40,9 @@ void runEusciAExample() {
             __bic_SR_register_on_exit(CPUOFF);// Exit LPM0 on reti
         }
     };
-
 #else
-#warning not working
-    static EUSCIA::UART::Interrupt::A1 int1;
-    int1.setIntrinsic(EUSCIA::UART::Interrupt::INTRINSICS::LEAVE_LOW_POWER);
+    EUSCIA::UART::Interrupt::A1 int1;
+    int1.setIntrinsic(ISR_INTRINSICS::LEAVE_LOW_POWER);
     int1.registerCallback(
         []([[maybe_unused]] const EUSCIA::UART::INT src) {
             EUSCIA::UART::A1 a1;
@@ -85,4 +82,4 @@ void runEusciAExample() {
         __bis_SR_register(LPM0_bits | GIE);// Enter LPM0, interrupts enabled
     }
 #endif
-};
+}
