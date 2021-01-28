@@ -49,4 +49,4 @@ void runWdtExample() {
     __no_operation();                  // For debug
 
 #endif
-};
+}
