@@ -7,14 +7,8 @@ void runWdtExample() {
 
 #ifdef EXAMPLE_RUN_WDTA
 
-#ifdef MT_MSP430_USE_DRIVERLIB_COMPATIBILITY
-    WdtA wdt{};
-    wdt.initIntervalTimer(WDTA::CLOCKSOURCE::SMCLK, WDTA::CLOCKDIVIDER::DIV32K);
-    wdt.start();
-#else
     WdtA wdt{};
     wdt.startIntervalTimer(WDTA::CLOCKSOURCE::SMCLK, WDTA::CLOCKDIVIDER::DIV32K);
-#endif
 
     GPIO::Port1 p1{};
     p1.setOutputLowOnPin(GPIO::PIN::P0);
