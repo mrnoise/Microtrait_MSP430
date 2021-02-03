@@ -21,8 +21,8 @@ void runWdtExample() {
 
     constexpr static WDTA::Interrupt::WDT inter{
         []() {
-            GPIO::Port1 p1{};
-            p1.toggleOutputOnPin(GPIO::PIN::P0);
+            GPIO::Port1 p{};
+            p.toggleOutputOnPin(GPIO::PIN::P0);
         }
     };
 
@@ -30,8 +30,8 @@ void runWdtExample() {
 
     WDTA::Interrupt::WDT inter;
     inter.registerCallback([]() {
-        GPIO::Port1 p1{};
-        p1.toggleOutputOnPin(GPIO::PIN::P0);
+        GPIO::Port1 p{};
+        p.toggleOutputOnPin(GPIO::PIN::P0);
     });
 
 #endif

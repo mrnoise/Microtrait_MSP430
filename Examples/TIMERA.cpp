@@ -25,8 +25,8 @@ void runTimerAExample() {
     constexpr static TIMERA::Interrupt::TA0 int0{
         [](const TIMERA::Interrupt::SOURCE src) {
             if (src == TIMERA::Interrupt::SOURCE::REGISTER0) {
-                GPIO::Port1 p1{};
-                p1.toggleOutputOnPin(GPIO::PIN::P0);
+                GPIO::Port1 p{};
+                p.toggleOutputOnPin(GPIO::PIN::P0);
 
                 TIMERA::TA0 ta0;
                 ta0.setCompareValue(TIMERA::CAPTURE_COMPARE::REGISTER0, c_compareValue);
@@ -40,8 +40,8 @@ void runTimerAExample() {
     int0.registerCallback(
         [](const TIMERA::Interrupt::SOURCE src) {
             if (src == TIMERA::Interrupt::SOURCE::REGISTER0) {
-                GPIO::Port1 p1{};
-                p1.toggleOutputOnPin(GPIO::PIN::P0);
+                GPIO::Port1 p{};
+                p.toggleOutputOnPin(GPIO::PIN::P0);
 
                 TIMERA::TA0 ta0;
                 ta0.setCompareValue(TIMERA::CAPTURE_COMPARE::REGISTER0, c_compareValue);

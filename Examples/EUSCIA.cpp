@@ -31,8 +31,8 @@ void runEusciAExample() {
             const uint8_t    rx = a1.receiveData();
             if (rx != c_checkByte)// Check value
             {
-                GPIO::Port1 p1;
-                p1.setOutputHighOnPin(GPIO::PIN::P0);
+                GPIO::Port1 p;
+                p.setOutputHighOnPin(GPIO::PIN::P0);
 
                 while (1)
                     ;
@@ -49,8 +49,8 @@ void runEusciAExample() {
             const uint8_t    rx = a1.receiveData();
             if (rx != c_checkByte)// Check value
             {
-                GPIO::Port1 p1;
-                p1.setOutputHighOnPin(GPIO::PIN::P0);
+                GPIO::Port1 p;
+                p.setOutputHighOnPin(GPIO::PIN::P0);
                 while (1)
                     ;
             }
