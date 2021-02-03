@@ -38,7 +38,7 @@
 									<listOptionValue builtIn="false" value="${CG_TOOL_INCLUDE_PATH}"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.MSP430_GNU_9.0.compilerID.OTHER_FLAGS.109039240" name="Miscellaneous flags" superClass="com.ti.ccstudio.buildDefinitions.MSP430_GNU_9.0.compilerID.OTHER_FLAGS" valueType="stringList">
-									<listOptionValue builtIn="false" value="-Wall -Wextra"/>
+									<listOptionValue builtIn="false" value="-Wextra -Wpedantic -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wmisleading-indentation -Wduplicated-cond -Wduplicated-branches -Wlogical-op  -Wnull-dereference -Wuseless-cast -Wdouble-promotion"/>
 									<listOptionValue builtIn="false" value="-flto"/>
 									<listOptionValue builtIn="false" value="-mlarge"/>
 									<listOptionValue builtIn="false" value="-mcode-region=either"/>
@@ -135,7 +135,7 @@
 									<listOptionValue builtIn="false" value="${CG_TOOL_INCLUDE_PATH}"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.MSP430_GNU_9.0.compilerID.OTHER_FLAGS.1282868767" name="Miscellaneous flags" superClass="com.ti.ccstudio.buildDefinitions.MSP430_GNU_9.0.compilerID.OTHER_FLAGS" valueType="stringList">
-									<listOptionValue builtIn="false" value="-Wextra"/>
+									<listOptionValue builtIn="false" value="-Wextra -Wpedantic -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wmisleading-indentation -Wduplicated-cond -Wduplicated-branches -Wlogical-op  -Wnull-dereference -Wuseless-cast -Wdouble-promotion"/>
 									<listOptionValue builtIn="false" value="-flto"/>
 									<listOptionValue builtIn="false" value="-mlarge"/>
 									<listOptionValue builtIn="false" value="-mcode-region=either"/>
