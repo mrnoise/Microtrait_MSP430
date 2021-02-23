@@ -1,8 +1,14 @@
 <?xml version="1.0"?>
-<analyzerinfo checksum="641037287">
+<analyzerinfo checksum="1798907647">
   <FileInfo check="CheckUnusedFunctions">
-    <functiondecl functionName="main" lineNumber="12"/>
+    <functiondecl functionName="main" lineNumber="10"/>
+    <functiondecl functionName="main" lineNumber="10"/>
+    <functiondecl functionName="main" lineNumber="10"/>
+    <functiondecl functionName="main" lineNumber="10"/>
+    <functioncall functionName="runEusciAExample"/>
+    <functioncall functionName="runGpioExample"/>
     <functioncall functionName="runTimerAExample"/>
+    <functioncall functionName="runWdtExample"/>
     <functioncall functionName="while"/>
   </FileInfo>
 </analyzerinfo>

@@ -1,6 +1,5 @@
-Main.a1::C:/Users/fuchs/Desktop/Trunk_local/CCS/GIT/Microtrait_MSP430/Main.cpp
+Main.a1::Main.cpp
+EUSCIA.a1::C:/Users/fuchs/Desktop/Trunk_local/CCS/GIT/Microtrait_MSP430/Examples/EUSCIA.cpp
 GPIO.a1::C:/Users/fuchs/Desktop/Trunk_local/CCS/GIT/Microtrait_MSP430/Examples/GPIO.cpp
 TIMERA.a1::C:/Users/fuchs/Desktop/Trunk_local/CCS/GIT/Microtrait_MSP430/Examples/TIMERA.cpp
 WDTA.a1::C:/Users/fuchs/Desktop/Trunk_local/CCS/GIT/Microtrait_MSP430/Examples/WDTA.cpp
-GpioInterrupt.a1::C:/Users/fuchs/Desktop/Trunk_local/CCS/GIT/Microtrait_MSP430/MicroTrait/MSP430/GPIO/GpioInterrupt.cpp
-WdtAInterrupt.a1::C:/Users/fuchs/Desktop/Trunk_local/CCS/GIT/Microtrait_MSP430/MicroTrait/MSP430/WDT/WdtAInterrupt.cpp
