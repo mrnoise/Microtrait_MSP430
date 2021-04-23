@@ -11,46 +11,38 @@ void runEusciAExample() {
 
 #ifdef EXAMPLE_RUN_EUSCIA
 
-    WdtA wdt{};
-    wdt.hold();
+    WdtA().hold();
 
-    GPIO::Port3 p3;
-    p3.setAsPeripheralModuleFunctionInputPin(GPIO::MODULE_FUNC::PRIMARY, GPIO::PIN::P4 | GPIO::PIN::P5);
+    GPIO::Port3().setAsPeripheralModuleFunctionInputPin(GPIO::MODULE_FUNC::PRIMARY, GPIO::PIN::P4 | GPIO::PIN::P5);
 
     GPIO::Port1 p1;
     p1.setAsOutputPin(GPIO::PIN::P0);
     p1.setOutputLowOnPin(GPIO::PIN::P0);
 
-    Pmm pmm{};
-    pmm.unlockLPM5();
+    Pmm().unlockLPM5();
 
-#ifdef MT_MSP430_USE_EUSCIA_UART_COMPILE_TIME_CALLBACKS
-    constexpr static EUSCIA::UART::Interrupt::A1 int1{
-        []([[maybe_unused]] const EUSCIA::UART::INT src) {
-            EUSCIA::UART::A1 a1;
-            const uint8_t    rx = a1.receiveData();
-            if (rx != c_checkByte)// Check value
-            {
-                GPIO::Port1 p;
-                p.setOutputHighOnPin(GPIO::PIN::P0);
-
-                while (1)
-                    ;
+#ifdef MT_MSP430_USE_EUSCIA_COMPILE_TIME_CALLBACKS
+    constexpr static EUSCIA::Interrupt::A1 int1{
+        []([[maybe_unused]] const EUSCIA::Interrupt::INT src) {
+            if (EUSCIA::Interrupt::isSet(src, EUSCIA::Interrupt::INT::RECEIVE)) {
+                if (EUSCIA::UART::A1().receiveData() != c_checkByte)// Check value
+                {
+                    GPIO::Port1().setOutputHighOnPin(GPIO::PIN::P0);
+                    while (1)
+                        ;
+                }
+                __bic_SR_register_on_exit(CPUOFF);// Exit LPM0 on reti
             }
-            __bic_SR_register_on_exit(CPUOFF);// Exit LPM0 on reti
         }
     };
 #else
-    EUSCIA::UART::Interrupt::A1 int1;
+    EUSCIA::Interrupt::A1 int1;
     int1.setIntrinsic(ISR_INTRINSICS::LEAVE_LOW_POWER);
     int1.registerCallback(
         []([[maybe_unused]] const EUSCIA::UART::INT src) {
-            EUSCIA::UART::A1 a1;
-            const uint8_t    rx = a1.receiveData();
-            if (rx != c_checkByte)// Check value
+            if (EUSCIA::UART::A1().receiveData() != c_checkByte)// Check value
             {
-                GPIO::Port1 p;
-                p.setOutputHighOnPin(GPIO::PIN::P0);
+                GPIO::Port1().setOutputHighOnPin(GPIO::PIN::P0);
                 while (1)
                     ;
             }
