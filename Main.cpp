@@ -10,11 +10,8 @@ using namespace MT::MSP430;
 int main(void) {
 
 #ifdef RUN_TESTS
-    WdtA wdt{};
-    wdt.hold();
-
-    Pmm pmm{};
-    pmm.unlockLPM5();
+    WdtA().hold();
+    Pmm().unlockLPM5();
 
     MT::Tests::run();
 

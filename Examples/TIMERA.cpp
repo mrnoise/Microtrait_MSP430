@@ -11,25 +11,20 @@ void runTimerAExample() {
 
 #ifdef EXAMPLE_RUN_TIMERA
 
-    WdtA wdt{};
-    wdt.hold();
+    WdtA().hold();
 
     GPIO::Port1 p1{};
     p1.setAsOutputPin(GPIO::PIN::P0);
     p1.setOutputHighOnPin(GPIO::PIN::P0);
 
-    Pmm pmm{};
-    pmm.unlockLPM5();
+    Pmm().unlockLPM5();
 
 #ifdef MT_MSP430_USE_TIMERA_COMPILE_TIME_CALLBACKS
     constexpr static TIMERA::Interrupt::TA0 int0{
         [](const TIMERA::Interrupt::SOURCE src) {
-            if (src == TIMERA::Interrupt::SOURCE::REGISTER0) {
-                GPIO::Port1 p{};
-                p.toggleOutputOnPin(GPIO::PIN::P0);
-
-                TIMERA::TA0 ta0;
-                ta0.setCompareValue(TIMERA::CAPTURE_COMPARE::REGISTER0, c_compareValue);
+            if (TIMERA::Interrupt::isSet(src, TIMERA::Interrupt::SOURCE::REGISTER0)) {
+                GPIO::Port1().toggleOutputOnPin(GPIO::PIN::P0);
+                TIMERA::TA0().setCompareValue(TIMERA::CAPTURE_COMPARE::REGISTER0, c_compareValue);
             }
         }
     };
@@ -39,17 +34,12 @@ void runTimerAExample() {
     TIMERA::Interrupt::TA0 int0;
     int0.registerCallback(
         [](const TIMERA::Interrupt::SOURCE src) {
-            if (src == TIMERA::Interrupt::SOURCE::REGISTER0) {
-                GPIO::Port1 p{};
-                p.toggleOutputOnPin(GPIO::PIN::P0);
-
-                TIMERA::TA0 ta0;
-                ta0.setCompareValue(TIMERA::CAPTURE_COMPARE::REGISTER0, c_compareValue);
+            if (TIMERA::Interrupt::isSet(src, TIMERA::Interrupt::SOURCE::REGISTER0)) {
+                GPIO::Port1().toggleOutputOnPin(GPIO::PIN::P0);
+                TIMERA::TA0().setCompareValue(TIMERA::CAPTURE_COMPARE::REGISTER0, c_compareValue);
             }
         });
 #endif
-
-    TIMERA::TA0 ta0;
 
     constexpr TIMERA::initContinuous param{
         TIMERA::CLOCKSOURCE::SMCLK,
@@ -66,7 +56,7 @@ void runTimerAExample() {
         c_compareValue
     };
 
-
+    TIMERA::TA0 ta0;
     ta0.clearCaptureCompareInterrupt(TIMERA::CAPTURE_COMPARE::REGISTER0);
     ta0.initCompareMode(paramCom);
     ta0.initContinuousMode(param);
