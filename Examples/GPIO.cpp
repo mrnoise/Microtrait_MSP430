@@ -14,14 +14,12 @@ void runGpioExample() {
 
     constexpr static GPIO::Interrupt::Port1 int1{
         []([[maybe_unused]] const GPIO::PIN pin) {
-            if (!GPIO::Interrupt::isSet(pin, GPIO::PIN::P1)) return;
             GPIO::Port1().toggleOutputOnPin(GPIO::PIN::P0);
         }
     };
 
     constexpr static GPIO::Interrupt::Port2 int2{
         []([[maybe_unused]] const GPIO::PIN pin) {
-            if (!GPIO::Interrupt::isSet(pin, GPIO::PIN::P4)) return;
             GPIO::Port1().toggleOutputOnPin(GPIO::PIN::P0);
         }
     };
